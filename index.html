@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমাদের প্রেমের গল্প</title>
+
+    <style>
+        body {
+            /* ব্যাকগ্রাউন্ড ইমেজের জন্য নতুন কোড */
+            background-image: url('Proposal.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
+            background-color: #f8f0e3;
+            font-family: 'Arial', sans-serif;
+            color: #4a4a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        h1 {
+            color: #d1495b;
+            font-size: 2.5em;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            min-height: 80px;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        button {
+            background-color: #d1495b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c03d4c;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        #yes-button {
+            background-color: #4CAF50;
+        }
+        #yes-button:hover {
+            background-color: #45a049;
+        }
+        #no-button {
+            background-color: #f44336;
+        }
+        #no-button:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>প্রিয় আরিফা ! 💞</h1>
+        <p>আমি JJ ! কিছু কথা বলার ছিলো, কিন্তু ধাপে ধাপে। Please পুরোটা পড়ো!</p>
+        <button id="nextButton">চলো শুরু করি</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.container');
+            const nextButton = document.getElementById('nextButton');
+            const paragraph = container.querySelector('p');
+            
+            const steps = [
+                " তোমার জন্য আমার ফিলিংস অনেক দিনের, সাধারণ বন্ধুত্বের সম্পর্ক নষ্ট হয়ে যাবে দেখে বলা হয়ে ওঠে নি 🥺...",
+                "গত তিন বছর যাবত আমার জীবনে অনেক কিছু ঘটে গেলেও , হৃদয়ের এক বিশেষ স্থানে তুমি রয়েই গেছো 😅...",
+                "এখন আমি তোমাকে আমার মনের কথা বলে দিয়েছি , তা তুমি স্বাভাবিক ভাবেই নিয়েছো 😊...",
+                "আশা করি তোমার মনেও হয়তো আমার জন্য একটা স্থান তৈরি হয়েছে! তোমাকে নিয়ে আমি অনেক আশাবাদী 😁...",
+                "I think,যদি ভবিষ্যতেও তুমি আমার সাথে থাকো , আমার মনে হয় আমাদের জীবনটা আরো অনেক বেশি সুন্দর হবে🥹😍 ...",
+                "তাহলে, আমার তোমাকে শুধু একটি শেষ কথা বলার আছে 🫠...",
+                "তুমি কি সারাজীবন আমার সাথে থাকবে 🫣?"
+            ];
+            
+            let currentStep = -1;
+
+            nextButton.addEventListener('click', () => {
+                currentStep++;
+                
+                if (currentStep < steps.length) {
+                    paragraph.classList.add('hidden');
+                    
+                    setTimeout(() => {
+                        paragraph.textContent = steps[currentStep];
+                        paragraph.classList.remove('hidden');
+                    }, 500);
+
+                    if (currentStep === 0) {
+                        nextButton.textContent = "পরবর্তী";
+                    }
+
+                    if (currentStep === steps.length - 1) {
+                        nextButton.style.display = 'none';
+                        
+                        const form = document.createElement('form');
+                        form.id = 'proposal-form';
+                        form.action = 'https://formspree.io/f/xzzaolaz';
+                        form.method = 'POST';
+
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'response';
+                        hiddenInput.id = 'response-input';
+
+                        const yesButton = document.createElement('button');
+                        yesButton.type = 'submit';
+                        yesButton.id = 'yes-button';
+                        yesButton.textContent = 'হ্যাঁ!';
+
+                        const noButton = document.createElement('button');
+                        noButton.type = 'submit';
+                        noButton.id = 'no-button';
+                        noButton.textContent = 'না';
+
+                        form.appendChild(hiddenInput);
+                        form.appendChild(yesButton);
+                        form.appendChild(noButton);
+                        container.appendChild(form);
+
+                        yesButton.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            hiddenInput.value = 'হ্যাঁ';
+                            form.submit();
+                            container.innerHTML = "<h1>Thank You Sweetheart 💞! I love you So much 😘! ❤</h1>";
+                        });
+
+                        noButton.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            hiddenInput.value = 'না';
+                            form.submit();
+                            container.innerHTML = "<h1>ঠিক আছে, আমি জানি এটা একটা sensitive সিদ্ধান্ত। আমি সবসময় বন্ধু হিসেবে তোমার পাশে থাকবো।</h1>";
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
